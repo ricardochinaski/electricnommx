@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric NOM México - La Suite Digital para Instalaciones Eléctricas NOM-001-SEDE</title>
+    <meta name="description" content="Aplicación técnica para ingenieros, UVIEs, proyectistas y electricistas en México. Calculadoras NOM-001-SEDE, consulta indexada offline y asistente IA.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-slate-950">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-brand-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-900 flex items-center justify-center shadow-lg shadow-brand-500/20 border border-brand-400/30">
+                        <i data-lucide="zap" class="w-6 h-6 text-slate-950 stroke-[2.5]"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                            Electric NOM <span class="bg-brand-500/10 text-brand-400 text-xs px-2 py-0.5 rounded border border-brand-500/30 font-semibold">MX</span>
+                        </span>
+                        <p class="text-[10px] text-slate-400 font-medium">NOM-001-SEDE México</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <button onclick="showSection('home')" class="hover:text-brand-400 transition-colors nav-link" id="nav-home">Inicio</button>
+                    <button onclick="showSection('funciones')" class="hover:text-brand-400 transition-colors nav-link" id="nav-funciones">Funciones</button>
+                    <button onclick="showSection('calculadoras')" class="hover:text-brand-400 transition-colors nav-link" id="nav-calculadoras">Calculadoras NOM</button>
+                    <button onclick="showSection('soporte')" class="hover:text-brand-400 transition-colors nav-link" id="nav-soporte">Soporte</button>
+                    <button onclick="showSection('privacidad')" class="hover:text-brand-400 transition-colors nav-link" id="nav-privacidad">Privacidad</button>
+                </nav>
+
+                <!-- Download CTA Header Button -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#descarga" onclick="showSection('home')" class="bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-500 hover:to-emerald-500 text-white font-semibold px-5 py-2.5 rounded-lg shadow-lg shadow-brand-900/40 transition-all border border-brand-400/30 flex items-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        Descargar App
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-b border-brand-900/50 px-4 pt-2 pb-6 space-y-3">
+            <button onclick="showSection('home'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Inicio</button>
+            <button onclick="showSection('funciones'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Funciones Clave</button>
+            <button onclick="showSection('calculadoras'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Calculadoras NOM</button>
+            <button onclick="showSection('soporte'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Soporte Técnico</button>
+            <button onclick="showSection('privacidad'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Política de Privacidad</button>
+            <button onclick="showSection('terminos'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Términos de Servicio</button>
+            <a href="#descarga" onclick="toggleMobileMenu()" class="block text-center bg-brand-600 text-white font-medium py-2.5 rounded-lg mt-2">Descargar Ahora</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- ================= SECTION: HOME / LANDING ================= -->
+        <section id="sec-home" class="view-section">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 bg-gradient-to-b from-slate-950 via-emerald-950/20 to-slate-950">
+                <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <!-- Mexican Flag & Norm Badge -->
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-brand-500/30 text-brand-300 text-xs font-semibold mb-6 shadow-inner">
+                            <span class="inline-block w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                            <span>Norma Oficial Mexicana NOM-001-SEDE</span>
+                            <span class="text-slate-500">|</span>
+                            <span class="text-slate-300">México 🇲🇽</span>
+                        </div>
+
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                            La Suite Eléctrica para <br class="hidden sm:inline"/>
+                            <span class="bg-gradient-to-r from-brand-400 via-emerald-300 to-green-500 bg-clip-text text-transparent">Profesionales NOM en México</span>
+                        </h1>
+
+                        <p class="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed font-normal">
+                            Diseñada exclusivamente para <strong class="text-white">Unidades de Verificación (UVIE)</strong>, Ingenieros, Proyectistas, Contratistas e Instaladores Eléctricos. Revisa la normativa, realiza cálculos exactos y optimiza proyectos en campo.
+                        </p>
+
+                        <!-- CTA Buttons -->
+                        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <a href="https://play.google.com/store/apps" target="_blank" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white border border-brand-500/30 px-6 py-3.5 rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl hover:scale-105">
+                                <i data-lucide="play" class="w-6 h-6 text-brand-400 fill-brand-400"></i>
+                                <div class="text-left">
+                                    <div class="text-[10px] uppercase text-slate-400 tracking-wider">Disponible en</div>
+                                    <div class="text-sm font-semibold">Google Play</div>
+                                </div>
+                            </a>
+
+                            <a href="https://apps.apple.com" target="_blank" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white border border-brand-500/30 px-6 py-3.5 rounded-xl flex items-center justify-center gap-3 transition-all shadow-xl hover:scale-105">
+                                <i data-lucide="apple" class="w-6 h-6 text-brand-400 fill-brand-400"></i>
+                                <div class="text-left">
+                                    <div class="text-[10px] uppercase text-slate-400 tracking-wider">Consíguelo en el</div>
+                                    <div class="text-sm font-semibold">App Store</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Highlights List -->
+                        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80 text-center">
+                            <div class="p-3">
+                                <p class="text-2xl font-bold text-brand-400">90% Offline</p>
+                                <p class="text-xs text-slate-400 mt-1">Uso en obra sin señal</p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-2xl font-bold text-brand-400">NOM-001</p>
+                                <p class="text-xs text-slate-400 mt-1">Artículos e Índices</p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-2xl font-bold text-brand-400">Asistente IA</p>
+                                <p class="text-xs text-slate-400 mt-1">Consultas RAG en vivo</p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-2xl font-bold text-brand-400">UVIE Ready</p>
+                                <p class="text-xs text-slate-400 mt-1">Verificación de proyectos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Quick View -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-white">Diseñada para el Trabajo Real en México</h2>
+                    <p class="text-slate-400 mt-2 max-w-2xl mx-auto">Olvídate de cargar los tomos pesados de la NOM o pelear con PDFs lentos en tu celular.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-slate-900/60 border border-brand-900/40 rounded-2xl p-6 hover:border-brand-500/50 transition-all hover:bg-slate-900/90 shadow-lg">
+                        <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-500/30 flex items-center justify-center text-brand-400 mb-5">
+                            <i data-lucide="book-open" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Normativa Indexada Completa</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Búsqueda instantánea por palabras clave y artículos de la <strong class="text-slate-200">NOM-001-SEDE</strong>. Encuentra especificaciones sobre acometidas, tableros, tierras y alimentadores en segundos.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-slate-900/60 border border-brand-900/40 rounded-2xl p-6 hover:border-brand-500/50 transition-all hover:bg-slate-900/90 shadow-lg">
+                        <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-500/30 flex items-center justify-center text-brand-400 mb-5">
+                            <i data-lucide="calculator" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Calculadoras de Ampacidad y Caída</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Cálculos según <strong class="text-slate-200">Tabla 310-15(b)(16)</strong>, factores de corrección por temperatura ambiente y agrupamiento de conductores en canalizaciones (Art. 310 y Cap. 9).
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-slate-900/60 border border-brand-900/40 rounded-2xl p-6 hover:border-brand-500/50 transition-all hover:bg-slate-900/90 shadow-lg">
+                        <div class="w-12 h-12 rounded-xl bg-brand-950 border border-brand-500/30 flex items-center justify-center text-brand-400 mb-5">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Asistente IA NOM (RAG)</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Resuelve dudas normativas complejas directamente en obra. Pregunta al asistente entrenado específicamente en los articulados de la norma mexicana.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive QR Download Section -->
+            <div id="descarga" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-emerald-950/80 border border-brand-500/30 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+                    <div class="grid md:grid-cols-12 gap-8 items-center">
+                        <div class="md:col-span-8 space-y-4">
+                            <span class="bg-brand-500/20 text-brand-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-brand-500/30">Descarga Gratuita</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Lleva la NOM-001-SEDE en tu Bolsillo</h2>
+                            <p class="text-slate-300 text-base leading-relaxed">
+                                Escanea el código QR desde tu teléfono inteligente o descarga directamente desde las tiendas oficiales para Android e iOS.
+                            </p>
+                            <div class="pt-4 flex flex-wrap gap-4">
+                                <a href="https://play.google.com/store/apps" target="_blank" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-5 py-3 rounded-xl font-semibold text-sm transition-all shadow-lg">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    Instalar para Android
+                                </a>
+                                <a href="https://apps.apple.com" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-5 py-3 rounded-xl font-semibold text-sm border border-slate-700 transition-all">
+                                    <i data-lucide="apple" class="w-4 h-4"></i>
+                                    Instalar para iPhone / iPad
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Simulated QR Code Container -->
+                        <div class="md:col-span-4 flex flex-col items-center justify-center bg-white p-6 rounded-2xl shadow-2xl text-slate-950 border-4 border-brand-500">
+                            <!-- SVG Generated QR Mockup -->
+                            <svg class="w-40 h-40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100" height="100" fill="white"/>
+                                <!-- QR Corners -->
+                                <rect x="5" y="5" width="25" height="25" rx="3" fill="#052e16"/>
+                                <rect x="9" y="9" width="17" height="17" rx="1" fill="white"/>
+                                <rect x="13" y="13" width="9" height="9" fill="#16a34a"/>
+
+                                <rect x="70" y="5" width="25" height="25" rx="3" fill="#052e16"/>
+                                <rect x="74" y="9" width="17" height="17" rx="1" fill="white"/>
+                                <rect x="78" y="13" width="9" height="9" fill="#16a34a"/>
+
+                                <rect x="5" y="70" width="25" height="25" rx="3" fill="#052e16"/>
+                                <rect x="9" y="74" width="17" height="17" rx="1" fill="white"/>
+                                <rect x="13" y="78" width="9" height="9" fill="#16a34a"/>
+
+                                <!-- Random QR Pattern Dots -->
+                                <rect x="35" y="10" width="6" height="6" fill="#16532d"/>
+                                <rect x="45" y="10" width="6" height="6" fill="#16a34a"/>
+                                <rect x="55" y="15" width="6" height="6" fill="#052e16"/>
+                                <rect x="35" y="25" width="6" height="6" fill="#16a34a"/>
+                                <rect x="45" y="20" width="6" height="6" fill="#16532d"/>
+                                
+                                <rect x="10" y="35" width="6" height="6" fill="#16a34a"/>
+                                <rect x="20" y="45" width="6" height="6" fill="#052e16"/>
+                                <rect x="35" y="40" width="8" height="8" fill="#166534"/>
+                                <rect x="50" y="35" width="6" height="6" fill="#16a34a"/>
+                                <rect x="65" y="40" width="6" height="6" fill="#052e16"/>
+                                <rect x="80" y="35" width="6" height="6" fill="#16a34a"/>
+
+                                <rect x="35" y="70" width="6" height="6" fill="#052e16"/>
+                                <rect x="45" y="80" width="6" height="6" fill="#16a34a"/>
+                                <rect x="55" y="75" width="6" height="6" fill="#16532d"/>
+                                <rect x="70" y="70" width="6" height="6" fill="#16a34a"/>
+                                <rect x="80" y="80" width="6" height="6" fill="#052e16"/>
+                            </svg>
+                            <p class="text-xs font-bold mt-3 text-slate-800 text-center uppercase tracking-wider">Escanea para probar</p>
+                            <p class="text-[10px] text-slate-500">Android & iOS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION: FUNCIONES ================= -->
+        <section id="sec-funciones" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-400 text-sm font-semibold uppercase tracking-wider">Características Profesionales</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-2">Módulos de la Aplicación</h1>
+                    <p class="text-slate-400 mt-4 text-base">Desarrollada bajo estándares de ingeniería eléctrica para garantizar cumplimiento y precisión técnica.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Module 1 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="file-search" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Búsqueda Rápida NOM-001</h3>
+                        <p class="text-slate-400 text-sm mt-2">Consulte artículos, tablas y apéndices de la norma oficial mexicana de forma instantánea sin conexión a internet.</p>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Caída de Tensión NOM</h3>
+                        <p class="text-slate-400 text-sm mt-2">Verificación de límites del 3% en circuitos derivados y 5% total en alimentadores (Art. 210-19 y 215-2).</p>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Dimensionamiento de Conduit</h3>
+                        <p class="text-slate-400 text-sm mt-2">Cálculo de ocupación máxima (40% para 3 o más conductores) según Tabla 1 del Capítulo 9 de la NOM.</p>
+                    </div>
+
+                    <!-- Module 4 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="grid" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Espacio e Interruptores en Tableros</h3>
+                        <p class="text-slate-400 text-sm mt-2">Cálculo de reservas en tableros de alumbrado y fuerza, equilibrio de fases e interruptores termomagnéticos.</p>
+                    </div>
+
+                    <!-- Module 5 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="folder-git2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Gestor "Mis Proyectos NOM"</h3>
+                        <p class="text-slate-400 text-sm mt-2">Guarda memorias técnicas preliminares, cálculos de circuitos y notas de inspección organizadas por cliente o faena.</p>
+                    </div>
+
+                    <!-- Module 6 -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl hover:border-brand-500/40 transition">
+                        <div class="w-10 h-10 rounded-lg bg-brand-950 text-brand-400 flex items-center justify-center mb-4">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Verificación UVIE</h3>
+                        <p class="text-slate-400 text-sm mt-2">Listas de cotejo para dictámenes de verificación de instalaciones eléctricas ante Unidades de Verificación acreditadas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION: DEMO CALCULADORAS ================= -->
+        <section id="sec-calculadoras" class="view-section hidden py-12">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-brand-400 text-sm font-semibold uppercase tracking-wider">Demostrador en Vivo</span>
+                    <h1 class="text-3xl font-bold text-white mt-2">Calculadora de Caída de Tensión NOM</h1>
+                    <p class="text-slate-400 text-sm mt-1">Prueba la lógica de cálculo que incluye la app móvil directamente en tu navegador.</p>
+                </div>
+
+                <!-- Live Mini Calculator App Card -->
+                <div class="bg-slate-900 border border-brand-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl max-w-2xl mx-auto">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase mb-2">Tensión nominal (V)</label>
+                            <select id="calc-v" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-500 outline-none">
+                                <option value="127">127 V (Monofásico)</option>
+                                <option value="220">220 V (Bifásico/Trifásico)</option>
+                                <option value="480">480 V (Industrial)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase mb-2">Corriente de Carga (A)</label>
+                            <input type="number" id="calc-i" value="20" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-500 outline-none" placeholder="Ampere">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase mb-2">Longitud del Circuito (m)</label>
+                            <input type="number" id="calc-l" value="35" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-500 outline-none" placeholder="Metros">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase mb-2">Calibre Conductor (AWG)</label>
+                            <select id="calc-calibre" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-500 outline-none">
+                                <option value="14">14 AWG (2.08 mm²)</option>
+                                <option value="12" selected>12 AWG (3.31 mm²)</option>
+                                <option value="10">10 AWG (5.26 mm²)</option>
+                                <option value="8">8 AWG (8.37 mm²)</option>
+                                <option value="6">6 AWG (13.30 mm²)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="calcularCaida()" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                        <i data-lucide="calculator" class="w-5 h-5"></i>
+                        Calcular Caída de Tensión
+                    </button>
+
+                    <!-- Result Output Box -->
+                    <div id="calc-result" class="mt-6 bg-slate-950 border border-slate-800 rounded-xl p-4 text-center">
+                        <p class="text-xs text-slate-400">Porcentaje de Caída Estimado:</p>
+                        <p id="res-percent" class="text-3xl font-extrabold text-brand-400 my-1">1.82%</p>
+                        <p id="res-status" class="text-xs font-semibold text-emerald-400">✓ Cumple con la NOM-001-SEDE (&lt; 3% en derivado)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION: SOPORTE Y CONTACTO ================= -->
+        <section id="sec-soporte" class="view-section hidden py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-brand-400 text-sm font-semibold uppercase tracking-wider">Atención al Usuario</span>
+                    <h1 class="text-3xl font-bold text-white mt-2">Soporte Técnico y Consultas</h1>
+                    <p class="text-slate-400 text-sm mt-1">¿Tienes sugerencias o requieres asistencia técnica con la aplicación?</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Contact Form -->
+                    <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl">
+                        <h2 class="text-lg font-bold text-white mb-4">Envíanos un Mensaje</h2>
+                        <form onsubmit="handleSupportSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo</label>
+                                <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white text-sm focus:border-brand-500 outline-none" placeholder="Ing. Carlos Mendoza">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Correo Electrónico</label>
+                                <input type="email" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white text-sm focus:border-brand-500 outline-none" placeholder="carlos@ingenieria.mx">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Mensaje o Consulta</label>
+                                <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-white text-sm focus:border-brand-500 outline-none" placeholder="Describe tu consulta referente a la app..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-semibold py-2.5 rounded-lg text-sm transition">
+                                Enviar Consulta
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Direct Contact & Details -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-900 border border-brand-900/50 p-6 rounded-2xl">
+                            <h3 class="text-lg font-bold text-white mb-2">Contacto Directo</h3>
+                            <p class="text-slate-400 text-sm">Nuestro equipo técnico atiende requerimientos de desarrollos a medida o soporte normativo para México.</p>
+                            
+                            <div class="mt-4 space-y-3">
+                                <div class="flex items-center gap-3 text-slate-300 text-sm">
+                                    <i data-lucide="mail" class="w-5 h-5 text-brand-400"></i>
+                                    <span>soporte@electricnom.mx</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-slate-300 text-sm">
+                                    <i data-lucide="globe" class="w-5 h-5 text-brand-400"></i>
+                                    <span>México - Cobertura Nacional</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-950/40 border border-brand-500/30 p-6 rounded-2xl">
+                            <h3 class="text-sm font-bold text-brand-300 uppercase tracking-wider mb-2">Preguntas Frecuentes</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                <strong class="text-white">¿La app funciona sin internet?</strong><br>
+                                Sí. El 90% de la base de datos de tablas y calculadoras funciona offline en terreno. Solo la función de Inteligencia Artificial RAG requiere conexión.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION: POLÍTICA DE PRIVACIDAD ================= -->
+        <section id="sec-privacidad" class="view-section hidden py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-invert">
+                <div class="border-b border-slate-800 pb-6 mb-8">
+                    <h1 class="text-3xl font-extrabold text-white">Política de Privacidad</h1>
+                    <p class="text-slate-400 text-xs mt-1">Última actualización: Julio 2026 | Electric NOM México</p>
+                </div>
+
+                <div class="space-y-6 text-slate-300 text-sm leading-relaxed">
+                    <p>
+                        En <strong class="text-white">Electric NOM México</strong>, valoramos y respetamos la privacidad de nuestros usuarios. Esta Política de Privacidad explica cómo recopilamos, utilizamos y salvaguardamos la información al utilizar nuestra aplicación móvil e interfaz web.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">1. Recopilación de Información</h2>
+                    <p>
+                        Electric NOM México recopila únicamente la información estrictamente necesaria para brindar el servicio y sincronizar sus proyectos:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                        <li><strong>Información de Cuenta:</strong> Dirección de correo electrónico cuando el usuario decide registrarse mediante Google Sign-In o Sign in with Apple.</li>
+                        <li><strong>Datos de Uso Técnico:</strong> Datos de proyectos creados localmente en la app (cálculos guardados, listas de verificación).</li>
+                    </ul>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">2. Uso de la Información</h2>
+                    <p>
+                        Los datos recopilados se utilizan exclusivamente para:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                        <li>Permitir el acceso a la sincronización en la nube de sus memorias de cálculo.</li>
+                        <li>Gestionar el estado de suscripción Premium mediante pasarelas de pago seguras (RevenueCat, Google Play Billing, App Store In-App Purchases).</li>
+                        <li>Brindar soporte técnico y responder solicitudes de los usuarios.</li>
+                    </ul>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">3. Almacenamiento y Seguridad</h2>
+                    <p>
+                        No compartimos, vendemos ni alquilamos datos personales a terceros. Todos los datos transmitidos entre la aplicación y nuestros servidores utilizan cifrado seguro mediante protocolo HTTPS/TLS de última generación.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">4. Eliminación de Cuenta y Datos</h2>
+                    <p>
+                        Conforme a las directrices de Google Play y App Store, el usuario puede solicitar la eliminación completa de su cuenta y proyectos almacenados en cualquier momento directamente desde los ajustes de la app o enviando un correo a <strong>privacidad@electricnom.mx</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION: TÉRMINOS DE SERVICIO ================= -->
+        <section id="sec-terminos" class="view-section hidden py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-slate-800 pb-6 mb-8">
+                    <h1 class="text-3xl font-extrabold text-white">Términos y Condiciones de Uso</h1>
+                    <p class="text-slate-400 text-xs mt-1">Última actualización: Julio 2026 | Electric NOM México</p>
+                </div>
+
+                <div class="space-y-6 text-slate-300 text-sm leading-relaxed">
+                    <p>
+                        Al descargar, instalar o utilizar la aplicación <strong class="text-white">Electric NOM México</strong>, usted acepta quedar vinculado por los siguientes Términos y Condiciones.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">1. Naturaleza de la Aplicación y Deslinde de Responsabilidad</h2>
+                    <p>
+                        Electric NOM México es una herramienta técnica independiente desarrollada con fines educativos, de consulta normativa rápida y pre-dimensionamiento para profesionales electrotécnicos.
+                    </p>
+                    <div class="bg-amber-950/40 border border-amber-500/30 p-4 rounded-xl text-amber-200 text-xs">
+                        <strong>IMPORTANTE:</strong> Esta aplicación NO es un documento oficial, NO representa a ninguna entidad gubernamental de los Estados Unidos Mexicanos, y NO está afiliada con la Secretaría de Energía (SENER), la Comisión Federal de Electricidad (CFE), ni la CONUEE. Todas las normas citadas pertenecen a fuentes públicas gubernamentales.
+                    </div>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">2. Responsabilidad Profesional</h2>
+                    <p>
+                        Los resultados emitidos por las calculadoras son referenciales. El ingeniero proyectista o la Unidad de Verificación (UVIE) es el responsable final de validar los cálculos y memorias técnicas antes de la firma de dictámenes o ejecución de la obra eléctrica.
+                    </p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3">3. Suscripciones y Pagos</h2>
+                    <p>
+                        La aplicación cuenta con una versión gratuita y opciones de suscripción de pago (Premium Pro). Las suscripciones se renuevan automáticamente a menos que sean canceladas al menos 24 horas antes del final del periodo actual desde la cuenta del usuario en Google Play o App Store.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-brand-900/50 pt-12 pb-8 mt-16 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-brand-500 flex items-center justify-center text-slate-950 font-bold">
+                            <i data-lucide="zap" class="w-4 h-4"></i>
+                        </div>
+                        <span class="text-base font-bold text-white">Electric NOM México</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Herramienta técnica digital para la ingeniería e instalación eléctrica conforme a la NOM-001-SEDE.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Secciones</h4>
+                    <ul class="space-y-2">
+                        <li><button onclick="showSection('home')" class="hover:text-brand-400">Inicio</button></li>
+                        <li><button onclick="showSection('funciones')" class="hover:text-brand-400">Módulos</button></li>
+                        <li><button onclick="showSection('calculadoras')" class="hover:text-brand-400">Calculadoras NOM</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Legales</h4>
+                    <ul class="space-y-2">
+                        <li><button onclick="showSection('privacidad')" class="hover:text-brand-400">Política de Privacidad</button></li>
+                        <li><button onclick="showSection('terminos')" class="hover:text-brand-400">Términos de Servicio</button></li>
+                        <li><button onclick="showSection('soporte')" class="hover:text-brand-400">Soporte Técnico</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-3">Normativa</h4>
+                    <p class="text-slate-400 text-xs">
+                        Basado en el Diario Oficial de la Federación (DOF) y publicaciones oficiales de la SENER para instalaciones eléctricas en México.
+                    </p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-900 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500">
+                <p>© 2026 Electric NOM México. Todos los derechos reservados.</p>
+                <div class="flex space-x-4">
+                    <span>🇲🇽 México</span>
+                    <span>•</span>
+                    <span>NOM-001-SEDE</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // Navigation Controller
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+
+            const targetSection = document.getElementById(`sec-${sectionId}`);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Nav styles
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('text-brand-400', 'font-bold');
+            });
+            const activeNav = document.getElementById(`nav-${sectionId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-brand-400', 'font-bold');
+            }
+        }
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Mini Calculator Interactive Logic
+        function calcularCaida() {
+            const v = parseFloat(document.getElementById('calc-v').value);
+            const i = parseFloat(document.getElementById('calc-i').value);
+            const l = parseFloat(document.getElementById('calc-l').value);
+            const calibre = document.getElementById('calc-calibre').value;
+
+            // Resistance per km approx values (Copper THHN / 75°C Conduit)
+            const rMap = {
+                '14': 10.1,
+                '12': 6.3,
+                '10': 3.9,
+                '8': 2.5,
+                '6': 1.6
+            };
+
+            const resistance = rMap[calibre] || 6.3;
+            // Formula caida monofasica: e = (2 * L * I * R) / 1000
+            const e = (2 * l * i * resistance) / 1000;
+            const percent = (e / v) * 100;
+
+            const resPercentEl = document.getElementById('res-percent');
+            const resStatusEl = document.getElementById('res-status');
+
+            resPercentEl.innerText = `${percent.toFixed(2)}%`;
+
+            if (percent <= 3.0) {
+                resPercentEl.className = "text-3xl font-extrabold text-brand-400 my-1";
+                resStatusEl.innerText = "✓ Cumple con la NOM-001-SEDE (< 3% en circuito derivado)";
+                resStatusEl.className = "text-xs font-semibold text-emerald-400";
+            } else {
+                resPercentEl.className = "text-3xl font-extrabold text-amber-500 my-1";
+                resStatusEl.innerText = "⚠️ Excede el 3% máximo recomendado por la NOM. Incrementar calibre.";
+                resStatusEl.className = "text-xs font-semibold text-amber-400";
+            }
+        }
+
+        // Form Submit Handler
+        function handleSupportSubmit(e) {
+            e.preventDefault();
+            alert("¡Gracias por tu mensaje! El equipo de Electric NOM México se pondrá en contacto contigo a la brevedad.");
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
