@@ -1,0 +1,124 @@
+workflows:
+  android-release:
+    name: Android Release Pipeline
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      groups:
+        - Internal Testers
+      flutter: stable
+      android_signing:
+        - pliegos_ric_release
+      vars:
+        APP_ID: com.chinaski.pliegosric
+        APP_NAME: PLIEGOS RIC CHILE
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    scripts:
+      - name: Generar .env desde variables de entorno
+        script: |
+          echo "GEMINI_API_KEY=$GEMINI_API_KEY" > .env
+          echo "REVENUECAT_API_KEY_ANDROID=$REVENUECAT_API_KEY_ANDROID" >> .env
+          # Fallar el build de inmediato si las claves no llegaron al pipeline.
+          # Sin esto, el AAB se sube con el paywall/IA rotos en silencio.
+          if [ -z "$REVENUECAT_API_KEY_ANDROID" ]; then
+            echo "ERROR: REVENUECAT_API_KEY_ANDROID esta vacia."
+            echo "Agregala en Codemagic (App settings > Environment variables > grupo 'Internal Testers')."
+            exit 1
+          fi
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "ERROR: GEMINI_API_KEY esta vacia (el Asistente IA no funcionaria en este build)."
+            exit 1
+          fi
+      - name: Instalar dependencias Flutter
+        script: |
+          flutter clean
+          flutter pub get
+      - name: Build App Bundle
+        script: |
+          flutter build appbundle --release
+          echo "=== AAB creado ==="
+          ls -la build/app/outputs/bundle/release/
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+    # Publicacion a Google Play deshabilitada a proposito: requiere una cuenta
+    # de servicio de Google Cloud con acceso a la Play Console API, que debe
+    # crearse y autorizarse manualmente (no es algo que se pueda configurar
+    # solo con codigo). Mientras tanto, el AAB firmado queda disponible como
+    # artifact de Codemagic para descargar y subir a mano.
+    #
+    # Para activar la publicacion automatica mas adelante:
+    #   1. Crear una cuenta de servicio en Google Cloud Console.
+    #   2. Otorgarle acceso "Release manager" en Play Console > Usuarios y permisos > API.
+    #   3. Pegar el JSON de credenciales como variable de entorno encriptada
+    #      en Codemagic (ej: GCLOUD_SERVICE_ACCOUNT_CREDENTIALS).
+    #   4. Descomentar el bloque de abajo.
+    #
+    # publishing:
+    #   google_play:
+    #     credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+    #     track: internal
+    #     submit_as_draft: true
+
+  ios-release:
+    name: iOS Release Pipeline
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: Aselec
+    environment:
+      groups:
+        - Internal Testers
+      flutter: stable
+      xcode: 26.4
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.aselec.pliegosric
+      vars:
+        APP_ID: com.aselec.pliegosric
+        APP_NAME: PLIEGOS RIC CHILE
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    scripts:
+      - name: Generar .env desde variables de entorno
+        script: |
+          echo "GEMINI_API_KEY=$GEMINI_API_KEY" > .env
+          echo "REVENUECAT_API_KEY_IOS=${REVENUECAT_API_KEY_IOS:-$REVENUECAT_API_KEY}" >> .env
+          # Fallar el build de inmediato si las claves no llegaron al pipeline.
+          # Sin esto, el IPA se sube a TestFlight con el paywall/IA rotos en silencio.
+          if [ -z "${REVENUECAT_API_KEY_IOS:-$REVENUECAT_API_KEY}" ]; then
+            echo "ERROR: la clave de RevenueCat esta vacia."
+            echo "Agrega REVENUECAT_API_KEY_IOS en Codemagic (App settings > Environment variables)"
+            echo "y asegurate de que su grupo este importado en environment.groups de este yaml."
+            exit 1
+          fi
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "ERROR: GEMINI_API_KEY esta vacia (el Asistente IA no funcionaria en este build)."
+            exit 1
+          fi
+      - name: Instalar dependencias Flutter y Pods
+        script: |
+          flutter clean
+          mkdir -p build/ios/SourcePackages build/macos/SourcePackages
+          flutter pub get
+          flutter precache --ios
+          cd ios && pod install && cd ..
+      - name: Install signing certificates
+        script: |
+          xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          mkdir -p build/ios/SourcePackages build/macos/SourcePackages
+          flutter build ipa --release --export-options-plist=/Users/builder/export_options.plist
+          echo "=== IPA creada ==="
+          ls -la build/ios/ipa/
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_app_store: false
+        submit_to_testflight: true

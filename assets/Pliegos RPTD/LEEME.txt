@@ -1,0 +1,1 @@
+Placeholder: carpeta heredada del proyecto chileno (RPTD). Decidir si se elimina o se reutiliza para normas complementarias (NOM-007-ENER, specs CFE).
