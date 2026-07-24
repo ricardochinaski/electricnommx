@@ -94,6 +94,7 @@
             <button onclick="showSection('soporte'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Soporte Técnico</button>
             <button onclick="showSection('privacidad'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Política de Privacidad</button>
             <button onclick="showSection('terminos'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Términos de Servicio</button>
+            <button onclick="showSection('eliminar-cuenta'); toggleMobileMenu()" class="block w-full text-left py-2 px-3 rounded hover:bg-slate-800 text-slate-200">Eliminar Cuenta</button>
             <a href="#descarga" onclick="toggleMobileMenu()" class="block text-center bg-brand-600 text-white font-medium py-2.5 rounded-lg mt-2">Descargar Ahora</a>
         </div>
     </header>
@@ -542,7 +543,46 @@
                 </div>
             </div>
         </section>
+        <section id="sec-eliminar-cuenta" class="view-section hidden py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="border-b border-slate-800 pb-6 mb-8"><h1 class="text-3xl font-extrabold text-white">Eliminación de Cuenta y Datos</h1><p class="text-slate-400 text-xs mt-1">Cumplimiento Google Play y App Store | Electric NOM México</p></div>
+                <div class="space-y-6 text-slate-300 text-sm leading-relaxed">
+                    <p>En <strong class="text-white">Electric NOM México</strong> puedes eliminar tu cuenta y todos tus datos asociados en cualquier momento.</p>
 
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3 mt-8">Opción 1: Desde la aplicación (recomendado)</h2>
+                    <ol class="list-decimal pl-5 space-y-2 text-slate-400">
+                        <li>Abre la aplicación <strong class="text-white">Electric NOM México</strong>.</li>
+                        <li>Ve a la pestaña <strong class="text-white">Ajustes</strong> (ícono de engranaje).</li>
+                        <li>Presiona en tu <strong class="text-white">Perfil</strong>.</li>
+                        <li>Selecciona <strong class="text-white">"Eliminar Cuenta"</strong>.</li>
+                        <li>Confirma escribiendo <strong class="text-white">"ELIMINAR"</strong> en el campo de texto.</li>
+                        <li>Presiona <strong class="text-white">"Confirmar eliminación"</strong>.</li>
+                    </ol>
+                    <p class="text-xs text-slate-500">La eliminación es irreversible. Se borrarán tu perfil, configuraciones, proyectos guardados e historial en la nube.</p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3 mt-8">Opción 2: Solicitud por correo electrónico</h2>
+                    <p>Si no puedes acceder a la aplicación, envía un correo a <a href="mailto:aselec.eirl@gmail.com" class="text-brand-400 hover:underline">aselec.eirl@gmail.com</a> con los siguientes datos:</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                        <li><strong>Asunto:</strong> "Solicitud de eliminación de cuenta - Electric NOM México"</li>
+                        <li><strong>Correo electrónico</strong> asociado a tu cuenta (el que usaste para registrarte).</li>
+                        <li>Una breve <strong>confirmación</strong> de que deseas eliminar tus datos.</li>
+                    </ul>
+                    <p class="text-xs text-slate-500">Procesaremos tu solicitud en un plazo máximo de 5 días hábiles.</p>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-brand-500 pl-3 mt-8">Datos que se eliminan</h2>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-400">
+                        <li>Perfil en Firebase Authentication (correo, nombre, UID).</li>
+                        <li>Proyectos guardados en Cloud Firestore.</li>
+                        <li>Historial de consultas al Asistente IA.</li>
+                        <li>Configuraciones personalizadas (tema, preferencias).</li>
+                    </ul>
+
+                    <div class="bg-amber-950/40 border border-amber-500/30 p-4 rounded-xl text-amber-200 text-xs mt-6">
+                        <strong>Nota:</strong> Los datos almacenados localmente en tu dispositivo (caché de PDFs, marcadores sin sincronizar) deberán eliminarse manualmente desinstalando la aplicación o borrando los datos desde Ajustes del sistema.
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -575,6 +615,7 @@
                     <ul class="space-y-2">
                         <li><button onclick="showSection('privacidad')" class="hover:text-brand-400">Política de Privacidad</button></li>
                         <li><button onclick="showSection('terminos')" class="hover:text-brand-400">Términos de Servicio</button></li>
+                        <li><button onclick="showSection('eliminar-cuenta')" class="hover:text-brand-400">Eliminar Cuenta</button></li>
                         <li><button onclick="showSection('soporte')" class="hover:text-brand-400">Soporte Técnico</button></li>
                     </ul>
                 </div>
