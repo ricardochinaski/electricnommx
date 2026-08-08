@@ -1,0 +1,42 @@
+name: Static Site CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'scripts/validate_site.py'
+      - '.github/workflows/static-site.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'scripts/validate_site.py'
+      - '.github/workflows/static-site.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-site-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate static site
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Runtime versions
+        run: |
+          python3 --version
+          node --version
+
+      - name: Validate HTML, navigation and inline JavaScript
+        run: python3 scripts/validate_site.py
